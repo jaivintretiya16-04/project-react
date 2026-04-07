@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ethers } from 'ethers';
 import { Shield, Box, Tractor, Store, TrendingUp, Scan, LogOut } from 'lucide-react';
 import Dashboard from './components/Dashboard';
