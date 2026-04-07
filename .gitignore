@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+dist/
+coverage/
+artifacts/
+cache/
+typechain-types/
+ignition/deployments/
+.vscode/
