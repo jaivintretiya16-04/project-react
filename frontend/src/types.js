@@ -1,5 +1,5 @@
 // Contract address on Sepolia
-export const CONTRACT_ADDRESS = "0x84dCBC5514574fa3c334aD3CEbbf9D1f2EE01dc7";
+export const CONTRACT_ADDRESS = "0x7b66F14C01649e5DdAFf44838A6d17bE7faF862f";
 
 export const ROLE_NAMES = { 0: 'None', 1: 'Farmer', 2: 'Transporter', 3: 'Retailer' };
 export const ROLE_ICONS = { Farmer: '🌾', Transporter: '🚛', Retailer: '🏪', Consumer: '👤' };
