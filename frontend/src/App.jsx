@@ -12,6 +12,7 @@ function App() {
   const [contract, setContract] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isInitializing, setIsInitializing] = useState(true);
 
   // ─── Profile (saved in localStorage per wallet) ───
   const [profile, setProfile] = useState(null); // { name, location, phone }
@@ -73,8 +74,29 @@ function App() {
       }
     } else {
       alert('Please install MetaMask!');
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const autoConnect = async () => {
+      if (window.ethereum) {
+        try {
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const accounts = await provider.listAccounts();
+          if (accounts.length > 0) {
+            await connectWallet();
+          }
+          setIsInitializing(false);
+        } catch {
+          setIsInitializing(false);
+        }
+      } else {
+        setIsInitializing(false);
+      }
+    };
+    autoConnect();
+  }, []);
 
   const registerRole = async (selectedRole) => {
     if (selectedRole === 0) {
@@ -113,6 +135,18 @@ function App() {
   // If role is set but no profile, prompt for profile
   const needsProfile = role !== 'None' && role !== 'Consumer' && !profile;
 
+  // ─── INITIALIZING APP ───
+  if (isInitializing) {
+    return (
+      <div className="max-w-6xl mx-auto px-6 flex flex-col items-center justify-center min-h-screen -mt-16">
+        <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-3xl flex items-center justify-center text-black mb-8 animate-pulse-glow">
+          <Shield size={40} />
+        </div>
+        <p className="text-secondary tracking-widest text-sm uppercase font-bold"><span className="spinner mr-2" /> Initializing...</p>
+      </div>
+    );
+  }
+
   // ─── LANDING ───
   if (!account) {
     return (
@@ -133,6 +167,16 @@ function App() {
         <p className="mt-6 text-xs text-dim">
           Make sure MetaMask is connected to <strong className="text-muted">Sepolia Testnet</strong>
         </p>
+      </div>
+    );
+  }
+
+  // ─── LOADING STATE AFTER CONNECTING (FETCHING ROLE) ───
+  if (isLoading && role === 'None') {
+    return (
+      <div className="max-w-6xl mx-auto px-6 flex flex-col items-center justify-center min-h-[60vh]">
+        <span className="spinner w-8 h-8 mb-4 border-primary"></span>
+        <p className="text-primary tracking-widest text-sm uppercase font-bold">Synchronizing with Blockchain...</p>
       </div>
     );
   }
