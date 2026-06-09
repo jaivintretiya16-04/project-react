@@ -23,7 +23,7 @@ Open a *new* terminal window and run:
 cd contracts
 npm run deploy:local
 ```
-> Note the deployed contract address. It should be `0x5FbDB2315678afecb367f032d93F642f64180aa3`. If it's different, update `CONTRACT_ADDRESS` in `frontend/src/types.ts`.
+> Note the deployed contract address. It should be `0x5FbDB2315678afecb367f032d93F642f64180aa3`.  If it's different, update `CONTRACT_ADDRESS` in `frontend/src/types.ts`.
 
 ### 3. Run Frontend
 Open another terminal and run:
